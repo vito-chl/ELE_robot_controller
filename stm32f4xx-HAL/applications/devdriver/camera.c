@@ -26,7 +26,7 @@ int init_camera_uart(void)
 
     rt_device_open(camera_uart, RT_DEVICE_FLAG_INT_RX);
 
-    rt_kprintf("camera_uart: init finish");
+    rt_kprintf("camera_uart: init finish\n");
 
     cmd[0] = 0xEB;
     cmd[1] = 0x90;

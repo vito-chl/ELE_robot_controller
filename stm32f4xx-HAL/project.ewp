@@ -313,14 +313,15 @@
           <state />
           <state>$PROJ_DIR$\rt-thread\include</state>
           <state>$PROJ_DIR$\Libraries\CMSIS\Include</state>
+          <state>$PROJ_DIR$\devdriver</state>
           <state>$PROJ_DIR$\drivers</state>
           <state>$PROJ_DIR$\rt-thread\libcpu\arm\cortex-m4</state>
           <state>$PROJ_DIR$\rt-thread\components\finsh</state>
           <state>$PROJ_DIR$\Libraries\CMSIS\Device\ST\STM32F4xx\Include</state>
           <state>$PROJ_DIR$\.</state>
-          <state>$PROJ_DIR$\applications</state>
           <state>$PROJ_DIR$\Libraries\STM32F4xx_HAL_Driver\Inc</state>
           <state>$PROJ_DIR$\rt-thread\components\drivers\include</state>
+          <state>$PROJ_DIR$\include</state>
           <state>$PROJ_DIR$\rt-thread\libcpu\arm\common</state>
         </option>
         <option>
@@ -1281,14 +1282,15 @@
           <state />
           <state>$PROJ_DIR$\rt-thread\include</state>
           <state>$PROJ_DIR$\Libraries\CMSIS\Include</state>
+          <state>$PROJ_DIR$\devdriver</state>
           <state>$PROJ_DIR$\drivers</state>
           <state>$PROJ_DIR$\rt-thread\libcpu\arm\cortex-m4</state>
           <state>$PROJ_DIR$\rt-thread\components\finsh</state>
           <state>$PROJ_DIR$\Libraries\CMSIS\Device\ST\STM32F4xx\Include</state>
           <state>$PROJ_DIR$\.</state>
-          <state>$PROJ_DIR$\applications</state>
           <state>$PROJ_DIR$\Libraries\STM32F4xx_HAL_Driver\Inc</state>
           <state>$PROJ_DIR$\rt-thread\components\drivers\include</state>
+          <state>$PROJ_DIR$\include</state>
           <state>$PROJ_DIR$\rt-thread\libcpu\arm\common</state>
         </option>
         <option>
@@ -1988,9 +1990,12 @@
     </file>
   </group>
   <group>
-    <name>Applications</name>
+    <name>devdriver</name>
     <file>
-      <name>$PROJ_DIR$\applications\main.c</name>
+      <name>$PROJ_DIR$\applications\app\main.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\applications\devdriver\camera.c</name>
     </file>
   </group>
   <group>

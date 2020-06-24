@@ -443,8 +443,8 @@ I (rt-thread\components\drivers\include\ipc/ringblk_buf.h)(0x5C4D6AFF)
 I (rt-thread\components\drivers\include\drivers/serial.h)(0x5C4D6AFF)
 I (rt-thread\components\drivers\include\drivers/pin.h)(0x5C4D6AFF)
 I (rt-thread\components\drivers\include\drivers/can.h)(0x5C4D6AFF)
-F (applications\devdriver\motor.c)(0x5EF35084)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork -I . -I rt-thread\include -I devdriver -I . -I include -I . -I drivers -I Libraries\CMSIS\Device\ST\STM32F4xx\Include -I Libraries\CMSIS\Include -I Libraries\STM32F4xx_HAL_Driver\Inc -I rt-thread\libcpu\arm\common -I rt-thread\libcpu\arm\cortex-m4 -I rt-thread\components\drivers\include -I rt-thread\components\drivers\include -I rt-thread\components\drivers\include -I rt-thread\components\drivers\include -I rt-thread\components\finsh-I.\RTE\_rt-thread_stm32f4xx-IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="525" -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx --C99-o .\build\motor.o --depend .\build\motor.d)
-I (applications\devdriver\motor.h)(0x5EF33A43)
+F (applications\devdriver\motor.c)(0x5EF35ED2)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork -I . -I rt-thread\include -I devdriver -I . -I include -I . -I drivers -I Libraries\CMSIS\Device\ST\STM32F4xx\Include -I Libraries\CMSIS\Include -I Libraries\STM32F4xx_HAL_Driver\Inc -I rt-thread\libcpu\arm\common -I rt-thread\libcpu\arm\cortex-m4 -I rt-thread\components\drivers\include -I rt-thread\components\drivers\include -I rt-thread\components\drivers\include -I rt-thread\components\drivers\include -I rt-thread\components\finsh-I.\RTE\_rt-thread_stm32f4xx-IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="525" -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx --C99-o .\build\motor.o --depend .\build\motor.d)
+I (applications\devdriver\motor.h)(0x5EF35F18)
 I (rt-thread\include\rtthread.h)(0x5C4D6AFF)
 I (.\rtconfig.h)(0x5EDF82B9)
 I (rt-thread\include\rtdebug.h)(0x5C4D6AFF)

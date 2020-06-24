@@ -3,9 +3,6 @@
 #define MOTOR_UART "uart3"
 #define CMD_MAX_LEN 64
 
-
-static int8_t cmd[CMD_MAX_LEN];
-
 static rt_device_t motor_uart;
 
 static struct rt_semaphore motor_uart_rx_sem;
@@ -171,4 +168,63 @@ int ctrl_motor_ret(uint8_t motor_id, uint8_t* cmd, uint8_t len, uint8_t* retptr,
 	}
 
 	return 0;
+}
+
+void set_speed(uint8_t motorid, int16_t speed)
+{
+	uint8_t cmd[] = SET_MOVE_SPEED;
+	cmd[4] = (uint8_t)speed>>8;
+	cmd[5] = (uint8_t)speed;
+	
+	ctrl_motor_noret(motorid, cmd, sizeof(cmd));
+}
+
+void set_distance(uint8_t motorid, int32_t distance)
+{
+	uint8_t cmd[] = SET_MOVE_DISTANCE;
+	cmd[7]  = (uint8_t)distance>>24;
+	cmd[8]  = (uint8_t)distance>>16;
+	cmd[9]  = (uint8_t)distance>>8;
+	cmd[10] = (uint8_t)distance;
+	
+	ctrl_motor_noret(motorid, cmd, sizeof(cmd));
+}
+
+int16_t read_speed(uint8_t motorid)
+{
+	uint8_t cmd[] = READ_CUR_SPEED_VALUE;
+	uint8_t buf[16]; 
+	uint8_t len;
+	uint16_t uret = 0; 
+	if(ctrl_motor_ret(motorid, cmd, sizeof(cmd), buf, &len) == 1)
+	{
+		uret = (uint16_t)buf[3]<<8 | (uint16_t)buf[3];
+	}
+	return (int16_t)uret;
+}
+
+int32_t read_set_pos(uint8_t motorid)
+{
+	uint8_t cmd[] = READ_SET_DISTANCE_VALUE;
+	uint8_t buf[16]; 
+	uint8_t len;
+	uint32_t uret = 0; 
+	if(ctrl_motor_ret(motorid, cmd, sizeof(cmd), buf, &len) == 1)
+	{
+		uret=(uint32_t)buf[3]<<24 | (uint32_t)buf[4]<<16 |(uint32_t)buf[5]<<8 | (uint32_t)buf[6];
+	}
+	return (int32_t)uret;
+}
+
+int32_t read_cur_pos(uint8_t motorid)
+{
+	uint8_t cmd[] = READ_CUR_DISTANCE_VALUE;
+	uint8_t buf[16]; 
+	uint8_t len;
+	uint32_t uret = 0; 
+	if(ctrl_motor_ret(motorid, cmd, sizeof(cmd), buf, &len) == 1)
+	{
+		uret=(uint32_t)buf[3]<<24 | (uint32_t)buf[4]<<16 |(uint32_t)buf[5]<<8 | (uint32_t)buf[6];
+	}
+	return (int32_t)uret;
 }

@@ -34,4 +34,11 @@ int ctrl_motor_noret(uint8_t motor_id, uint8_t* cmd, uint8_t len);
 // crc 正确返回1 不正确返回0
 int ctrl_motor_ret(uint8_t motor_id, uint8_t* cmd, uint8_t len, uint8_t* retptr, uint8_t* retlen);
 
+void set_speed(uint8_t motorid, int16_t speed);
+void set_distance(uint8_t motorid, int32_t distance);
+
+int16_t read_speed(uint8_t motorid);
+int32_t read_set_pos(uint8_t motorid);
+int32_t read_cur_pos(uint8_t motorid);
+
 #endif

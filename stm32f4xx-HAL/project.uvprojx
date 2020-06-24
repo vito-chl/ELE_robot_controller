@@ -371,7 +371,7 @@
             <ScatterFile>.\stm32_rom.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc>--keep *.o(.rti_fn.*)   --keep *.o(FSymTab)</Misc>
+            <Misc> --keep *.o(.rti_fn.*)   --keep *.o(FSymTab)</Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings></DisabledWarnings>
           </LDads>
@@ -475,6 +475,11 @@
               <FileName>camera.c</FileName>
               <FileType>1</FileType>
               <FilePath>applications\devdriver\camera.c</FilePath>
+            </File>
+            <File>
+              <FileName>motor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>applications\devdriver\motor.c</FilePath>
             </File>
           </Files>
         </Group>

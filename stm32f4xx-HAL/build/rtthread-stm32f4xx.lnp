@@ -17,6 +17,7 @@
 ".\build\timer.o"
 ".\build\main.o"
 ".\build\camera.o"
+".\build\motor.o"
 ".\build\board.o"
 ".\build\stm32f4xx_it.o"
 ".\build\drv_gpio.o"

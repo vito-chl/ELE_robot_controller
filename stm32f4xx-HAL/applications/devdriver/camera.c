@@ -1,6 +1,6 @@
 #include"camera.h"
 
-/* Ë«¹âÏà»úµÄÍ¨ĞÅÍ¨µÀ */
+/* åŒå…‰ç›¸æœºçš„é€šä¿¡é€šé“ */
 #define CARMEA_UART "uart2"
 #define CMD_LEN     16
 
@@ -10,7 +10,7 @@ static rt_device_t camera_uart;
 
 struct serial_configure camera_uart_config = RT_SERIAL_CONFIG_DEFAULT;
 
-/* ³õÊ¼»¯ÓëË«¹âÏà»úÍ¨ĞÅµÄ´®¿Ú */
+/* åˆå§‹åŒ–ä¸åŒå…‰ç›¸æœºé€šä¿¡çš„ä¸²å£ */
 int init_camera_uart(void)
 {
     camera_uart = rt_device_find(CARMEA_UART);
@@ -87,9 +87,9 @@ void set_zoom_rate(int8_t r)
 
 void update_cmd()
 {
-    /* ÌîĞ´Ğ£ÑéĞÅÏ¢ */
+    /* å¡«å†™æ ¡éªŒä¿¡æ¯ */
     cmd[15] = 0;
 
-    /* ´®¿Ú·¢ËÍÖ¸Áî */
+    /* ä¸²å£å‘é€æŒ‡ä»¤ */
     rt_device_write(camera_uart, 0, cmd, 16);
 }

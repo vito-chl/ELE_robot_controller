@@ -11,8 +11,8 @@ static struct rt_semaphore motor_uart_finish_rec_sem;
 
 struct serial_configure motor_uart_config = RT_SERIAL_CONFIG_DEFAULT;
 
-uint8_t rec_databuf[64];
-uint8_t rec_databytes;
+static uint8_t rec_databuf[64];
+static uint8_t rec_databytes;
 
 
 /* 接收数据回调函数 */
@@ -121,7 +121,7 @@ int init_motor_uart(void)
 INIT_APP_EXPORT(init_motor_uart);
 
 /* 发送指令 */
-void send_motor_cmd(uint8_t* ptr, uint8_t len)
+static void send_motor_cmd(uint8_t* ptr, uint8_t len)
 {
 	uint16_t crc = get_crc16(ptr, len-2);
 	ptr[len-2] = (uint8_t)crc>>8;
@@ -172,7 +172,7 @@ int ctrl_motor_ret(uint8_t motor_id, uint8_t* cmd, uint8_t len, uint8_t* retptr,
 
 void set_speed(uint8_t motorid, int16_t speed)
 {
-	uint8_t cmd[] = SET_MOVE_SPEED;
+	uint8_t cmd[] = SET_MOVE_SPEED_CMD;
 	cmd[4] = (uint8_t)speed>>8;
 	cmd[5] = (uint8_t)speed;
 	
@@ -181,7 +181,7 @@ void set_speed(uint8_t motorid, int16_t speed)
 
 void set_distance(uint8_t motorid, int32_t distance)
 {
-	uint8_t cmd[] = SET_MOVE_DISTANCE;
+	uint8_t cmd[] = SET_MOVE_DISTANCE_CMD;
 	cmd[7]  = (uint8_t)distance>>24;
 	cmd[8]  = (uint8_t)distance>>16;
 	cmd[9]  = (uint8_t)distance>>8;
@@ -192,7 +192,7 @@ void set_distance(uint8_t motorid, int32_t distance)
 
 int16_t read_speed(uint8_t motorid)
 {
-	uint8_t cmd[] = READ_CUR_SPEED_VALUE;
+	uint8_t cmd[] = READ_CUR_SPEED_VALUE_CMD;
 	uint8_t buf[16]; 
 	uint8_t len;
 	uint16_t uret = 0; 
@@ -205,7 +205,7 @@ int16_t read_speed(uint8_t motorid)
 
 int32_t read_set_pos(uint8_t motorid)
 {
-	uint8_t cmd[] = READ_SET_DISTANCE_VALUE;
+	uint8_t cmd[] = READ_SET_DISTANCE_VALUE_CMD;
 	uint8_t buf[16]; 
 	uint8_t len;
 	uint32_t uret = 0; 
@@ -218,7 +218,7 @@ int32_t read_set_pos(uint8_t motorid)
 
 int32_t read_cur_pos(uint8_t motorid)
 {
-	uint8_t cmd[] = READ_CUR_DISTANCE_VALUE;
+	uint8_t cmd[] = READ_CUR_DISTANCE_VALUE_CMD;
 	uint8_t buf[16]; 
 	uint8_t len;
 	uint32_t uret = 0; 
@@ -227,4 +227,30 @@ int32_t read_cur_pos(uint8_t motorid)
 		uret=(uint32_t)buf[3]<<24 | (uint32_t)buf[4]<<16 |(uint32_t)buf[5]<<8 | (uint32_t)buf[6];
 	}
 	return (int32_t)uret;
+}
+
+void motor_init(uint8_t motorid)
+{
+	uint8_t cmd_set_optmode[] =  SET_OPTMODE_CMD;
+	ctrl_motor_noret(motorid, cmd_set_optmode, sizeof(cmd_set_optmode));
+}
+
+void motor_set_mode(uint8_t motorid, int mode)
+{
+	if(mode == SPEED_MODE)
+	{
+		uint8_t cmd_set_ctrlmode[] =  SET_CTRMODE_SPEED_CMD;
+		ctrl_motor_noret(motorid, cmd_set_ctrlmode, sizeof(cmd_set_ctrlmode));
+	}
+	
+	else if(mode == DISTANCE_MODE)
+	{
+		uint8_t cmd_set_ctrlmode[] = SET_CTRMODE_POS_CMD;
+		uint8_t cmd_set_relative[] = SET_MOVMODE_RELATIVE_CMD;
+		uint8_t cmd_enable_motor[] = ENABLD_MOTOR_CMD;
+		
+		ctrl_motor_noret(motorid, cmd_set_ctrlmode, sizeof(cmd_set_ctrlmode));
+		ctrl_motor_noret(motorid, cmd_set_relative, sizeof(cmd_set_relative));
+		ctrl_motor_noret(motorid, cmd_enable_motor, sizeof(cmd_enable_motor));	
+	}
 }

@@ -477,9 +477,24 @@
               <FilePath>applications\devdriver\camera.c</FilePath>
             </File>
             <File>
+              <FileName>ctrlinfo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>applications\devdriver\ctrlinfo.c</FilePath>
+            </File>
+            <File>
               <FileName>motor.c</FileName>
               <FileType>1</FileType>
               <FilePath>applications\devdriver\motor.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart_rec.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\devdriver\uart_rec.c</FilePath>
+            </File>
+            <File>
+              <FileName>funclist.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\devdriver\funclist.c</FilePath>
             </File>
           </Files>
         </Group>

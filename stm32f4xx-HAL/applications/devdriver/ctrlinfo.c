@@ -144,13 +144,13 @@ int init_ctrlinfo(void)
     rt_device_control(crtlinfo_uart, RT_DEVICE_CTRL_CONFIG, &crtlinfo_uart_config);
     rt_device_open(crtlinfo_uart, RT_DEVICE_FLAG_INT_RX);
 	
-	rt_sem_init(&crtlinfo_uart_irq_rx_sem, "crtlinfo_uart_irq_rx_sem", 0, RT_IPC_FLAG_FIFO);
-	rt_sem_init(&crtlinfo_uart_finish_rec_sem, "crtlinfo_uart_finish_rec_sem", 0, RT_IPC_FLAG_FIFO);
+	rt_sem_init(&crtlinfo_uart_irq_rx_sem, "ciirq", 0, RT_IPC_FLAG_FIFO);
+	rt_sem_init(&crtlinfo_uart_finish_rec_sem, "cirecf", 0, RT_IPC_FLAG_FIFO);
 	
 	rt_device_set_rx_indicate(crtlinfo_uart, uart_rx_ind);
 	
-    rt_thread_t thread_uart = rt_thread_create("ctrlinfo_rec_uart", rxuart_thread_entry, RT_NULL, 1024, 25, 10);
-	rt_thread_t thread_data = rt_thread_create("ctrlinfo_exec_cmd", directive_run_thread_entry, RT_NULL, 4096, 25, 10);
+    rt_thread_t thread_uart = rt_thread_create("cirec", rxuart_thread_entry, RT_NULL, 1024, 25, 10);
+	rt_thread_t thread_data = rt_thread_create("ciexe", directive_run_thread_entry, RT_NULL, 4096, 25, 10);
 	
 	if (thread_uart != RT_NULL)
     {

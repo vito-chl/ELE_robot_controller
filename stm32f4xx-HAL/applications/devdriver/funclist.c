@@ -21,6 +21,8 @@ uint8_t return_data_bufsize = 12;
 
 static void mode_change(int mode)
 {
+	rt_kprintf("robot: current move mode %d\n", move_mode);
+	rt_kprintf("robot: set move mode %d\n", mode);
 	if(move_mode == UNSET_MODE)
 	{
 		motor_init(0x11);
@@ -221,3 +223,14 @@ void funclist_init()
 		ctrl_funclist[i].dev_addr = 0x01;
 	}
 }
+
+static void rcmd_motor_test(int argc, char *argv[])
+{
+	mode_change(SPEED_MODE);
+	move_start(0,0);
+	
+	mode_change(DISTANCE_MODE);
+	move_start(0,0);
+	
+}
+MSH_CMD_EXPORT(rcmd_motor_test, xxx);

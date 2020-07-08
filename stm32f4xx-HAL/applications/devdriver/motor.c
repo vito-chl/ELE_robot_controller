@@ -1,6 +1,6 @@
 #include"motor.h"
 
-#define MOTOR_UART "uart3"
+#define MOTOR_UART "uart2"
 #define CMD_MAX_LEN 64
 
 static rt_device_t motor_uart;
@@ -15,10 +15,10 @@ static uint8_t rec_databuf[64];
 static uint8_t rec_databytes;
 
 
-/* ½ÓÊÕÊı¾İ»Øµ÷º¯Êı */
+/* æ¥æ”¶æ•°æ®å›è°ƒå‡½æ•° */
 static rt_err_t uart_rx_ind(rt_device_t dev, rt_size_t size)
 {
-    /* ´®¿Ú½ÓÊÕµ½Êı¾İºó²úÉúÖĞ¶Ï£¬µ÷ÓÃ´Ë»Øµ÷º¯Êı£¬È»ºó·¢ËÍ½ÓÊÕĞÅºÅÁ¿ */
+    /* ä¸²å£æ¥æ”¶åˆ°æ•°æ®åäº§ç”Ÿä¸­æ–­ï¼Œè°ƒç”¨æ­¤å›è°ƒå‡½æ•°ï¼Œç„¶åå‘é€æ¥æ”¶ä¿¡å·é‡ */
     if (size > 0)
     {
         rt_sem_release(&motor_uart_rx_sem);
@@ -34,12 +34,12 @@ static void motor_rxuart_thread_entry(void *parameter)
 	
     while(1)
     {
-		rt_sem_take(&motor_uart_start_rec_sem, RT_WAITING_FOREVER); //µÈ´ı½ÓÊÜÇëÇóĞÅºÅÁ¿ 
+		rt_sem_take(&motor_uart_start_rec_sem, RT_WAITING_FOREVER); //ç­‰å¾…æ¥å—è¯·æ±‚ä¿¡å·é‡ 
 		rec_num = 0;
 		all_data_num = 0;
 		
 		while(all_data_num==0 || rec_num!=all_data_num){
-			//µÈ´ı´®¿Ú½ÓÊÜµ½Êı¾İ
+			//ç­‰å¾…ä¸²å£æ¥å—åˆ°æ•°æ®
 			while(rt_device_read(motor_uart, -1, &ch, 1) == 0)
 			{
 				rt_sem_take(&motor_uart_rx_sem, RT_WAITING_FOREVER);
@@ -59,7 +59,7 @@ static void motor_rxuart_thread_entry(void *parameter)
 	}
 }
 
-/* CRCĞ£Ñé */
+/* CRCæ ¡éªŒ */
 uint16_t get_crc16(uint8_t* ptr, uint8_t len)
 {
 	uint8_t i;
@@ -85,10 +85,18 @@ uint16_t get_crc16(uint8_t* ptr, uint8_t len)
 	return crc;
 }
 
-/* ³õÊ¼»¯Óëµç»ú¿ØÖÆÆ÷Í¨ĞÅµÄ´®¿Ú */
+/* åˆå§‹åŒ–ä¸ç”µæœºæ§åˆ¶å™¨é€šä¿¡çš„ä¸²å£ */
 int init_motor_uart(void)
 {
     motor_uart = rt_device_find(MOTOR_UART);
+	
+	if(motor_uart!=RT_NULL)
+		rt_kprintf("motor_uart: find uart2 and set it\n");
+	else 
+	{
+		rt_kprintf("motor_uart: don't find uart2, fail init motor\n");
+		return 0;
+	}
 
     motor_uart_config.baud_rate = 115200;
     motor_uart_config.data_bits = 8;
@@ -97,40 +105,57 @@ int init_motor_uart(void)
     motor_uart_config.parity = PARITY_NONE;
     motor_uart_config.bit_order = BIT_ORDER_LSB;
 
-    rt_device_control(motor_uart, RT_DEVICE_CTRL_CONFIG, &motor_uart_config);
-    rt_device_open(motor_uart, RT_DEVICE_FLAG_INT_RX);
+    if(rt_device_control(motor_uart, RT_DEVICE_CTRL_CONFIG, &motor_uart_config)!=RT_EOK)
+	{
+		rt_kprintf("motor_uart: can't config uart2\n");
+	}
+	else 
+	{
+		rt_kprintf("motor_uart: config uart2 finish\n");
+	}
 	
-	rt_sem_init(&motor_uart_rx_sem, "motor_uart_rx_sem", 0, RT_IPC_FLAG_FIFO);
-	rt_sem_init(&motor_uart_start_rec_sem, "motor_uart_start_rec_sem", 0, RT_IPC_FLAG_FIFO);
-	rt_sem_init(&motor_uart_finish_rec_sem, "motor_uart_finish_rec_sem", 0, RT_IPC_FLAG_FIFO);
+	if(rt_device_open(motor_uart, RT_DEVICE_FLAG_INT_RX)!=RT_EOK)
+	{
+		rt_kprintf("motor_uart: can't open uart2\n");
+		rt_device_close(motor_uart);
+	}
+	else 
+	{
+		rt_kprintf("motor_uart: open uart2 finish\n");
+	}
+	
+	rt_sem_init(&motor_uart_rx_sem, "mtirq", 0, RT_IPC_FLAG_FIFO);
+	rt_sem_init(&motor_uart_start_rec_sem, "mtsr", 0, RT_IPC_FLAG_FIFO);
+	rt_sem_init(&motor_uart_finish_rec_sem, "mtfr", 0, RT_IPC_FLAG_FIFO);
 	
 	rt_device_set_rx_indicate(motor_uart, uart_rx_ind);
+	rt_kprintf("motor_uart: bind uart2 irq to func\n");
 	
-    rt_thread_t thread = rt_thread_create("motor_rec_uart", motor_rxuart_thread_entry, RT_NULL, 1024, 25, 10);
-
+    rt_thread_t thread = rt_thread_create("mtrec", motor_rxuart_thread_entry, RT_NULL, 1024, 25, 10);
+	
     if (thread != RT_NULL)
     {
         rt_thread_startup(thread);
-		rt_kprintf("motor_uart: motor_rec_uart init finish\n");
+		rt_kprintf("motor_uart: motor_rec_uart thread init finish\n");
     }
 	
-    rt_kprintf("motor_uart: all init finish\n");
+    rt_kprintf("motor_uart %s: all init finish\n", MOTOR_UART);
 	
 	return 0;
 }
 INIT_APP_EXPORT(init_motor_uart);
 
-/* ·¢ËÍÖ¸Áî */
+/* å‘é€æŒ‡ä»¤ */
 static void send_motor_cmd(uint8_t* ptr, uint8_t len)
 {
 	uint16_t crc = get_crc16(ptr, len-2);
-	ptr[len-2] = (uint8_t)crc>>8;
-	ptr[len-1] = (uint8_t)crc;
+	ptr[len-1] = (uint8_t)(crc>>8);
+	ptr[len-2] = (uint8_t)(crc);
 	
 	rt_device_write(motor_uart, 0, ptr, len);
 }
 
-/* µç»úÉèÖÃ, ²»½ÓÊÜ·µ»ØÖµ */
+/* ç”µæœºè®¾ç½®, ä¸æ¥å—è¿”å›å€¼ */
 int ctrl_motor_noret(uint8_t motor_id, uint8_t* cmd, uint8_t len)
 {
 	cmd[0] = motor_id;
@@ -138,28 +163,28 @@ int ctrl_motor_noret(uint8_t motor_id, uint8_t* cmd, uint8_t len)
 	return 0;
 }
 
-/* µç»úÉèÖÃ, ½ÓÊÜ·µ»ØÖµ u16 */
-// crc ÕıÈ··µ»Ø1 ²»ÕıÈ··µ»Ø0
+/* ç”µæœºè®¾ç½®, æ¥å—è¿”å›å€¼ u16 */
+// crc æ­£ç¡®è¿”å›1 ä¸æ­£ç¡®è¿”å›0
 int ctrl_motor_ret(uint8_t motor_id, uint8_t* cmd, uint8_t len, uint8_t* retptr, uint8_t* retlen)
 {
 	cmd[0] = motor_id;
 	send_motor_cmd(cmd, len);
 	
-	/* ¿ªÊ¼Ê¹ÄÜ½ÓÊÜ */
+	/* å¼€å§‹ä½¿èƒ½æ¥å— */
 	rt_sem_release(&motor_uart_start_rec_sem);
 	
-	/* µÈ´ı½ÓÊÜÍê±Ï */
+	/* ç­‰å¾…æ¥å—å®Œæ¯• */
 	rt_sem_take(&motor_uart_finish_rec_sem, RT_WAITING_FOREVER);
 	
-	/* crcĞ£Ñé */
+	/* crcæ ¡éªŒ */
 	uint16_t crc = get_crc16(rec_databuf, rec_databytes-2);
 	
-	/* ÌáÈ¡CRC¸ßÎ»µÍÎ» */
+	/* æå–CRCé«˜ä½ä½ä½ */
 	uint8_t hcrc = (uint8_t)crc>>8;
 	uint8_t lcrc = (uint8_t)crc;
 	
-	/* CRCÑéÖ¤ ³É¹¦½øĞĞ¿½±´ */
-	if(hcrc==rec_databuf[rec_databytes-2] && lcrc==rec_databuf[rec_databytes-1])
+	/* CRCéªŒè¯ æˆåŠŸè¿›è¡Œæ‹·è´ */
+	if(lcrc==rec_databuf[rec_databytes-2] && hcrc==rec_databuf[rec_databytes-1])
 	{
 		for(int i=0; i<rec_databytes; i++)
 		retptr[i] = rec_databuf[i];

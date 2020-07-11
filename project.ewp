@@ -314,6 +314,7 @@
           <state>$PROJ_DIR$\rt-thread\include</state>
           <state>$PROJ_DIR$\Libraries\CMSIS\Include</state>
           <state>$PROJ_DIR$\devdriver</state>
+          <state>$PROJ_DIR$\rt-thread\libcpu\arm\common</state>
           <state>$PROJ_DIR$\drivers</state>
           <state>$PROJ_DIR$\rt-thread\libcpu\arm\cortex-m4</state>
           <state>$PROJ_DIR$\rt-thread\components\finsh</state>
@@ -321,8 +322,7 @@
           <state>$PROJ_DIR$\.</state>
           <state>$PROJ_DIR$\Libraries\STM32F4xx_HAL_Driver\Inc</state>
           <state>$PROJ_DIR$\rt-thread\components\drivers\include</state>
-          <state>$PROJ_DIR$\include</state>
-          <state>$PROJ_DIR$\rt-thread\libcpu\arm\common</state>
+          <state>$PROJ_DIR$\devdriver\include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1283,6 +1283,7 @@
           <state>$PROJ_DIR$\rt-thread\include</state>
           <state>$PROJ_DIR$\Libraries\CMSIS\Include</state>
           <state>$PROJ_DIR$\devdriver</state>
+          <state>$PROJ_DIR$\rt-thread\libcpu\arm\common</state>
           <state>$PROJ_DIR$\drivers</state>
           <state>$PROJ_DIR$\rt-thread\libcpu\arm\cortex-m4</state>
           <state>$PROJ_DIR$\rt-thread\components\finsh</state>
@@ -1290,8 +1291,7 @@
           <state>$PROJ_DIR$\.</state>
           <state>$PROJ_DIR$\Libraries\STM32F4xx_HAL_Driver\Inc</state>
           <state>$PROJ_DIR$\rt-thread\components\drivers\include</state>
-          <state>$PROJ_DIR$\include</state>
-          <state>$PROJ_DIR$\rt-thread\libcpu\arm\common</state>
+          <state>$PROJ_DIR$\devdriver\include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1992,19 +1992,19 @@
   <group>
     <name>devdriver</name>
     <file>
-      <name>$PROJ_DIR$\applications\app\main.c</name>
+      <name>$PROJ_DIR$\applications\main.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\applications\devdriver\camera.c</name>
+      <name>$PROJ_DIR$\devdriver\camera.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\applications\devdriver\ctrlinfo.c</name>
+      <name>$PROJ_DIR$\devdriver\ctrlinfo.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\applications\devdriver\funclist.c</name>
+      <name>$PROJ_DIR$\devdriver\funclist.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\applications\devdriver\motor.c</name>
+      <name>$PROJ_DIR$\devdriver\motor.c</name>
     </file>
   </group>
   <group>

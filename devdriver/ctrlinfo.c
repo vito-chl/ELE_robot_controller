@@ -1,6 +1,6 @@
 #include"ctrlinfo.h"
 
-#define CTRLINFOR_UART "uart2"
+#define CTRLINFOR_UART "uart3"
 #define CMD_MAX_LEN 64
 
 static rt_device_t crtlinfo_uart;

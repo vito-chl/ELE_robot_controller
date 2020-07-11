@@ -1,7 +1,7 @@
 #include"camera.h"
 
 /* 双光相机的通信通道 */
-#define CARMEA_UART "uart6"
+#define CARMEA_UART "uart3"
 #define CMD_LEN     16
 
 static int8_t cmd[CMD_LEN];

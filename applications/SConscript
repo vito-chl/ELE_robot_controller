@@ -2,9 +2,10 @@ Import('RTT_ROOT')
 Import('rtconfig')
 from building import *
 
+cwd     = os.path.join(str(Dir('#')), 'devdriver')
 src	= Glob('*.c')
-CPPPATH = [str(Dir('#'))]
+CPPPATH = [cwd, str(Dir('#'))]
 
-group = DefineGroup('app', src, depend = [''], CPPPATH = CPPPATH)
+group = DefineGroup('devdriver', src, depend = [''], CPPPATH = CPPPATH)
 
 Return('group')

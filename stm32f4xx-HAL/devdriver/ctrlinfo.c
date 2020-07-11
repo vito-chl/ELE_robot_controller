@@ -20,7 +20,7 @@ data_handle_t ctrl_funclist[FUNCLIST_SIZE];
 extern uint8_t return_data_buf[];
 extern uint8_t return_data_bufsize;
 
-/* ½ÓÊÕÖĞ¶Ï»Øµ÷º¯Êı */
+/* æ¥æ”¶ä¸­æ–­å›è°ƒå‡½æ•° */
 static rt_err_t uart_rx_ind(rt_device_t dev, rt_size_t size)
 {
     if (size > 0)
@@ -31,7 +31,7 @@ static rt_err_t uart_rx_ind(rt_device_t dev, rt_size_t size)
 }
 
 
-/* Êı¾İ½ÓÊÜÏß³Ì´¦Àíº¯Êı */
+/* æ•°æ®æ¥å—çº¿ç¨‹å¤„ç†å‡½æ•° */
 static void rxuart_thread_entry(void *parameter)
 {
 	char ch;
@@ -43,14 +43,14 @@ static void rxuart_thread_entry(void *parameter)
 		rec_num = 0;
 		all_data_num = 0;
 		
-		while(all_data_num==0 || rec_num!=all_data_num){ 	//´®¿Ú½ÓÊÜµ½Êı¾İ
+		while(all_data_num==0 || rec_num!=all_data_num){ 	//ä¸²å£æ¥å—åˆ°æ•°æ®
 			
 			while(rt_device_read(crtlinfo_uart, -1, &ch, 1) == 0)
 			{
 				rt_sem_take(&crtlinfo_uart_irq_rx_sem, RT_WAITING_FOREVER);
 			}
 
-			if(data_recing==0 && ch==0x3A) //½ÓÊÕµ½Ö¡Í·
+			if(data_recing==0 && ch==0x3A) //æ¥æ”¶åˆ°å¸§å¤´
 			{
 				data_recing = 1;	
 				rec_num = 0;
@@ -60,12 +60,12 @@ static void rxuart_thread_entry(void *parameter)
 			if(data_recing == 1)
 			{
 				rec_num++; 
-				if(rec_num==4) // Ñ°ÕÒ×Ü×Ö½ÚÊıÎ»ÖÃ
+				if(rec_num==4) // å¯»æ‰¾æ€»å­—èŠ‚æ•°ä½ç½®
 				{
 					if(ch > 4)
 						goto __rec_reset;
 
-					all_data_num = 12; //²»ĞèÒª¼ÆËã Ğ­Òé¹Ì¶¨ÁË
+					all_data_num = 12; //ä¸éœ€è¦è®¡ç®— åè®®å›ºå®šäº†
 					rec_databytes = all_data_num;
 				}
 				rec_databuf[rec_num-1]=ch;
@@ -75,7 +75,7 @@ static void rxuart_thread_entry(void *parameter)
 		if(rec_databuf[rec_databytes-1]==0x0A && rec_databuf[rec_databytes-2]==0x0D)
 		{
 			data_recing = 0;
-			rt_sem_release(&crtlinfo_uart_finish_rec_sem); // ½ÓÊÜÍê³ÉÇëÇó´¦Àí
+			rt_sem_release(&crtlinfo_uart_finish_rec_sem); // æ¥å—å®Œæˆè¯·æ±‚å¤„ç†
 			goto __rec_reset;
 		}
 			
@@ -87,7 +87,7 @@ static void rxuart_thread_entry(void *parameter)
 }
 
 
-/* ÃüÁîÖ´ĞĞº¯Êı */
+/* å‘½ä»¤æ‰§è¡Œå‡½æ•° */
 static void directive_run_thread_entry(void* arg)
 {
 	data_handle_t* ihandle;
@@ -111,16 +111,16 @@ static void directive_run_thread_entry(void* arg)
 			devaddr_rec = rec_databuf[1];
 			funcnum_rec = rec_databuf[2];
 			
-			if(devaddr_rec==ihandle->dev_addr && funcnum_rec==ihandle->func_num && ihandle->func!=0) // Æ¥Åä
+			if(devaddr_rec==ihandle->dev_addr && funcnum_rec==ihandle->func_num && ihandle->func!=0) // åŒ¹é…
 			{
 				int ret = ihandle->func(devaddr_rec ,data_rec);
-				if(ret == 0) // Ö´ĞĞ³É¹¦ÇÒÃ»ÓĞ¶Á³öÊı¾İ
+				if(ret == 0) // æ‰§è¡ŒæˆåŠŸä¸”æ²¡æœ‰è¯»å‡ºæ•°æ®
 				{
-					rt_device_write(crtlinfo_uart, 0, rec_databuf, rec_databytes);//Ğ´»ØÏûÏ¢
+					rt_device_write(crtlinfo_uart, 0, rec_databuf, rec_databytes);//å†™å›æ¶ˆæ¯
 				}
-				else if(ret == 1) // Ö´ĞĞ³É¹¦ĞèÒª·µ»ØÊı¾İ
+				else if(ret == 1) // æ‰§è¡ŒæˆåŠŸéœ€è¦è¿”å›æ•°æ®
 				{
-					rt_device_write(crtlinfo_uart, 0, return_data_buf, return_data_bufsize);//Ğ´»ØÏûÏ¢
+					rt_device_write(crtlinfo_uart, 0, return_data_buf, return_data_bufsize);//å†™å›æ¶ˆæ¯
 				}
 				break;
 			}
@@ -129,7 +129,7 @@ static void directive_run_thread_entry(void* arg)
 	}
 }
 
-/* ³õÊ¼»¯ */
+/* åˆå§‹åŒ– */
 int init_ctrlinfo(void)
 {
     crtlinfo_uart = rt_device_find(CTRLINFOR_UART);

@@ -1997,6 +1997,15 @@
     <file>
       <name>$PROJ_DIR$\applications\devdriver\camera.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$\applications\devdriver\ctrlinfo.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\applications\devdriver\funclist.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\applications\devdriver\motor.c</name>
+    </file>
   </group>
   <group>
     <name>Drivers</name>

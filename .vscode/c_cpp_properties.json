@@ -1,32 +1,33 @@
 {
     "configurations": [
         {
-            "intelliSenseMode": "clang-x64", 
-            "name": "Win32", 
-            "cppStandard": "c++11", 
-            "cStandard": "c99", 
-            "compilerPath": "E:/env/tools/gnu_gcc/arm_gcc/mingw/bin/arm-none-eabi-gcc", 
+            "intelliSenseMode": "clang-x64",
+            "name": "Win32",
+            "cppStandard": "c++11",
+            "cStandard": "c99",
+            "compilerPath": "E:/env/tools/gnu_gcc/arm_gcc/mingw/bin/arm-none-eabi-gcc",
             "includePath": [
-                "E:/code/ELE_robot_controller", 
-                "E:/code/ELE_robot_controller/Libraries/CMSIS/Device/ST/STM32F4xx/Include", 
-                "E:/code/ELE_robot_controller/Libraries/CMSIS/Include", 
-                "E:/code/ELE_robot_controller/Libraries/STM32F4xx_HAL_Driver/Inc", 
-                "E:/code/ELE_robot_controller/devdriver", 
-                "E:/code/ELE_robot_controller/devdriver/include", 
-                "E:/code/ELE_robot_controller/drivers", 
-                "E:/code/ELE_robot_controller/rt-thread/components/drivers/include", 
-                "E:/code/ELE_robot_controller/rt-thread/components/finsh", 
-                "E:/code/ELE_robot_controller/rt-thread/components/libc/compilers/minilibc", 
-                "E:/code/ELE_robot_controller/rt-thread/include", 
-                "E:/code/ELE_robot_controller/rt-thread/libcpu/arm/common", 
+                "E:/code/ELE_robot_controller",
+                "E:/code/ELE_robot_controller/Libraries/CMSIS/Device/ST/STM32F4xx/Include",
+                "E:/code/ELE_robot_controller/Libraries/CMSIS/Include",
+                "E:/code/ELE_robot_controller/Libraries/STM32F4xx_HAL_Driver/Inc",
+                "E:/code/ELE_robot_controller/devdriver",
+                "E:/code/ELE_robot_controller/devdriver/include",
+                "E:/code/ELE_robot_controller/drivers",
+                "E:/code/ELE_robot_controller/rt-thread/components/drivers/include",
+                "E:/code/ELE_robot_controller/rt-thread/components/finsh",
+                "E:/code/ELE_robot_controller/rt-thread/components/libc/compilers/minilibc",
+                "E:/code/ELE_robot_controller/rt-thread/include",
+                "E:/code/ELE_robot_controller/rt-thread/libcpu/arm/common",
                 "E:/code/ELE_robot_controller/rt-thread/libcpu/arm/cortex-m4"
-            ], 
+            ],
             "defines": [
-                "HAVE_CCONFIG_H", 
-                "RT_USING_MINILIBC", 
-                "STM32F407xx", 
+                "HAVE_CCONFIG_H",
+                "RT_USING_MINILIBC",
+                "STM32F407xx",
                 "USE_HAL_DRIVER"
             ]
         }
-    ]
+    ],
+    "version": 4
 }

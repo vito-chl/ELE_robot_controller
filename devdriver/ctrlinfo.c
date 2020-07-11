@@ -1,6 +1,6 @@
 #include"ctrlinfo.h"
 
-#define CTRLINFOR_UART "uart3"
+#define CTRLINFOR_UART "uart2"
 #define CMD_MAX_LEN 64
 
 static rt_device_t crtlinfo_uart;
@@ -96,10 +96,18 @@ static void directive_run_thread_entry(void* arg)
 	
 	int32_t data_rec;
 	
+	uint16_t crc;
+	
 	while(1)
 	{
 		rt_sem_take(&crtlinfo_uart_finish_rec_sem, RT_WAITING_FOREVER);
 		
+		crc = get_crc16(&rec_databuf[1], rec_databytes-5);
+		
+		if((uint8_t)(crc>>8)!=rec_databuf[rec_databytes-4] ||	\
+			(uint8_t)crc!=rec_databuf[rec_databytes-3])
+			continue;
+
 		data_rec = 	((uint32_t)rec_databuf[4])<<24 | \
 					((uint32_t)rec_databuf[5])<<16 | \
 					((uint32_t)rec_databuf[6])<<8  | \

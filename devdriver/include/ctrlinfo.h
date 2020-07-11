@@ -3,6 +3,7 @@
 
 #include"rtthread.h"
 #include"rtdevice.h"
+#include"common.h"
 
 #define FUNCLIST_SIZE 50
 

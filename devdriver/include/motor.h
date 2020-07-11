@@ -3,6 +3,7 @@
 
 #include"rtthread.h"
 #include"rtdevice.h"
+#include"common.h"
 
 #define SPEED_MODE 		0
 #define DISTANCE_MODE 	1
@@ -28,11 +29,11 @@
 #define READ_CUR_SPEED_VALUE_CMD {0x00, 0x03, 0x00, 0xAF, 0x00, 0x01, 0x00, 0x00}
 
 
-/* µç»úÉèÖÃ, ²»½ÓÊÜ·µ»ØÖµ */
+/* ç”µæœºè®¾ç½®, ä¸æ¥å—è¿”å›å€¼ */
 int ctrl_motor_noret(uint8_t motor_id, uint8_t* cmd, uint8_t len);
 
-/* µç»úÉèÖÃ, ½ÓÊÜ·µ»ØÖµ u16 */
-// crc ÕıÈ··µ»Ø1 ²»ÕıÈ··µ»Ø0
+/* ç”µæœºè®¾ç½®, æ¥å—è¿”å›å€¼ u16 */
+// crc æ­£ç¡®è¿”å›1 ä¸æ­£ç¡®è¿”å›0
 int ctrl_motor_ret(uint8_t motor_id, uint8_t* cmd, uint8_t len, uint8_t* retptr, uint8_t* retlen);
 
 void set_speed(uint8_t motorid, int16_t speed);
@@ -42,7 +43,7 @@ void motor_init(uint8_t motorid);
 
 void motor_set_mode(uint8_t motorid, int mode);
 
-/* ËÙ¶È¶ÁÈ¡º¯Êı£¬·µ»ØÖµÎªËÙ¶È */
+/* é€Ÿåº¦è¯»å–å‡½æ•°ï¼Œè¿”å›å€¼ä¸ºé€Ÿåº¦ */
 int16_t read_speed(uint8_t motorid);
 int32_t read_set_pos(uint8_t motorid);
 int32_t read_cur_pos(uint8_t motorid);

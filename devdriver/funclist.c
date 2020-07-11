@@ -50,7 +50,7 @@ static int set_forward_speed(uint8_t dev_addr ,uint32_t data)
 {
 	mode_change(SPEED_MODE);
 	move_direction = FORWARD;
-	move_speed = (int16_t)data;
+	move_speed = (int16_t)(data>>16);
 	set_speed(0x11,move_speed);
 	set_speed(0x12,move_speed);
 	
@@ -61,7 +61,7 @@ static int set_backward_speed(uint8_t dev_addr ,uint32_t data)
 {
 	mode_change(SPEED_MODE);
 	move_direction = BACKWARD;
-	move_speed = (int16_t)data;
+	move_speed = (int16_t)(data>>16);
 	set_speed(0x11,-move_speed);
 	set_speed(0x12,-move_speed);
 	
@@ -223,6 +223,7 @@ void funclist_init()
 		ctrl_funclist[i].dev_addr = 0x01;
 	}
 }
+INIT_APP_EXPORT(funclist_init);
 
 static void rcmd_motor_test(int argc, char *argv[])
 {

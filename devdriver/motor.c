@@ -1,6 +1,6 @@
 #include"motor.h"
 
-#define MOTOR_UART "uart2"
+#define MOTOR_UART "uart3"
 #define CMD_MAX_LEN 64
 
 static rt_device_t motor_uart;
@@ -59,31 +59,7 @@ static void motor_rxuart_thread_entry(void *parameter)
 	}
 }
 
-/* CRC校验 */
-uint16_t get_crc16(uint8_t* ptr, uint8_t len)
-{
-	uint8_t i;
-	uint16_t crc = 0xFFFF;
-	if(len == 0) len = 1;
-	while(len--)
-	{
-		crc ^= *ptr;
-		for(i=0; i<8; i++)
-		{
-			if(crc&1)
-			{
-				crc >>= 1;
-				crc ^= 0xA001;
-			}
-			else 
-			{
-				crc >>= 1;
-			}
-		}
-		ptr++;
-	}
-	return crc;
-}
+
 
 /* 初始化与电机控制器通信的串口 */
 int init_motor_uart(void)
@@ -198,8 +174,8 @@ int ctrl_motor_ret(uint8_t motor_id, uint8_t* cmd, uint8_t len, uint8_t* retptr,
 void set_speed(uint8_t motorid, int16_t speed)
 {
 	uint8_t cmd[] = SET_MOVE_SPEED_CMD;
-	cmd[4] = (uint8_t)speed>>8;
-	cmd[5] = (uint8_t)speed;
+	cmd[4] = (uint8_t)(speed>>8);
+	cmd[5] = (uint8_t)(speed);
 	
 	ctrl_motor_noret(motorid, cmd, sizeof(cmd));
 }
@@ -207,10 +183,10 @@ void set_speed(uint8_t motorid, int16_t speed)
 void set_distance(uint8_t motorid, int32_t distance)
 {
 	uint8_t cmd[] = SET_MOVE_DISTANCE_CMD;
-	cmd[7]  = (uint8_t)distance>>24;
-	cmd[8]  = (uint8_t)distance>>16;
-	cmd[9]  = (uint8_t)distance>>8;
-	cmd[10] = (uint8_t)distance;
+	cmd[7]  = (uint8_t)(distance>>24);
+	cmd[8]  = (uint8_t)(distance>>16);
+	cmd[9]  = (uint8_t)(distance>>8);
+	cmd[10] = (uint8_t)(distance);
 	
 	ctrl_motor_noret(motorid, cmd, sizeof(cmd));
 }

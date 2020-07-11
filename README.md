@@ -1,5 +1,9 @@
 # 电力巡检机器人控制系统
 
+## 0. 板级接口
+
+![板级接口](https://raw.githubusercontent.com/vito-chl/ELE_robot_controller/master/figures/板级接口说明.png)
+
 ## 1. 简介
 
 - 软件：基于rt-thread实时操作系统

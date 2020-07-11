@@ -337,7 +337,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER, STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>.;rt-thread\include;devdriver;.;applications\include;.;drivers;Libraries\CMSIS\Device\ST\STM32F4xx\Include;Libraries\CMSIS\Include;Libraries\STM32F4xx_HAL_Driver\Inc;rt-thread\libcpu\arm\common;rt-thread\libcpu\arm\cortex-m4;rt-thread\components\drivers\include;rt-thread\components\drivers\include;rt-thread\components\drivers\include;rt-thread\components\drivers\include;rt-thread\components\finsh</IncludePath>
+              <IncludePath>.;rt-thread\include;devdriver;.;devdriver\include;.;drivers;Libraries\CMSIS\Device\ST\STM32F4xx\Include;Libraries\CMSIS\Include;Libraries\STM32F4xx_HAL_Driver\Inc;rt-thread\libcpu\arm\common;rt-thread\libcpu\arm\cortex-m4;rt-thread\components\drivers\include;rt-thread\components\drivers\include;rt-thread\components\drivers\include;rt-thread\components\drivers\include;rt-thread\components\finsh</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -474,22 +474,22 @@
             <File>
               <FileName>camera.c</FileName>
               <FileType>1</FileType>
-              <FilePath>applications\devdriver\camera.c</FilePath>
+              <FilePath>devdriver\camera.c</FilePath>
             </File>
             <File>
               <FileName>ctrlinfo.c</FileName>
               <FileType>1</FileType>
-              <FilePath>applications\devdriver\ctrlinfo.c</FilePath>
+              <FilePath>devdriver\ctrlinfo.c</FilePath>
             </File>
             <File>
               <FileName>funclist.c</FileName>
               <FileType>1</FileType>
-              <FilePath>applications\devdriver\funclist.c</FilePath>
+              <FilePath>devdriver\funclist.c</FilePath>
             </File>
             <File>
               <FileName>motor.c</FileName>
               <FileType>1</FileType>
-              <FilePath>applications\devdriver\motor.c</FilePath>
+              <FilePath>devdriver\motor.c</FilePath>
             </File>
           </Files>
         </Group>

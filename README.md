@@ -2,7 +2,7 @@
 
 ## 0. 板级接口
 
-![板级接口](https://raw.githubusercontent.com/vito-chl/ELE_robot_controller/master/figures/板级接口说明.png)
+![板级接口](https://github.com/vito-chl/ELE_robot_controller/master/figures/板级接口说明.png)
 
 ## 1. 简介
 
